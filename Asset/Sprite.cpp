@@ -8,13 +8,10 @@
  *		  unsigned int w: 图像宽度
  *		  unsigned int h: 图像高度
  *  返回值 void
- *  初始化成员变量rect
  *  功能：读取文件且检查是否可用
  *		  解析文件类型，并初始化相应的SDL_image模块
- *		  初始化图像矩形
- *  注意：本函数不会自动为图像资源分配内存，请自行调用LoadInfoToMemory函数
  */
-Sprite::Sprite(std::string &path, Uint w, Uint h) {
+Sprite::Sprite(std::string &path, Uint w, Uint h) : Asset(path){
 	
 	// 检查文件是否存在
 	{
@@ -75,8 +72,6 @@ Sprite::Sprite(std::string &path, Uint w, Uint h) {
 			}
 
 		}while (0);
-
-		this->rect = new SDL_Rect {0, 0, (int)w, (int)h}; //初始化图像矩形
 	}
 	return;
 }
@@ -114,6 +109,8 @@ int Sprite::ChangePath(std::string &path, Uint w, Uint h) {
 	this->path = path;
 	this->weight, height = w, h;
 
+	/*
+
 	// 检查rect是否为可用指针
 	if (this->rect != nullptr) {
 		this->rect->w, h = (int)w, (int)h;
@@ -122,31 +119,25 @@ int Sprite::ChangePath(std::string &path, Uint w, Uint h) {
 		this->rect = new SDL_Rect{ 0,0,(int)w,(int)h };
 	}
 
+	*/
+
 	return 0;
 	
 }
 
 
 /*
- * Sprite::LoadInfoToMemory
- * 参数： void
+ * Sprite::SetZoom
+ * 参数：float z: 图像的缩放比例(必须为正浮点数)
  * 返回值：int
- *		   0：成功
- *		   -1：文件资源不可用
- * 功能：将图像资源加载到内存中
+ *		   0：成功设置新的zoom缩放比例
+ *		   -1：设置的缩放比例小于等于0，失败
  */
-int Sprite::LoadInfoToMemory(SDL_Renderer* target) {
-	// 检查文件是否可用
-	if (this->path.empty()) {
+int Sprite::SetZoom(float z) {
+	if (z <= 0) {
 		return -1;
 	}
 
-	// 检查surface是否可用
-	if (this->surface == nullptr) {
-		this->surface = IMG_Load(this->path.c_str());
-	} else {
-		this->texture = SDL_CreateTextureFromSurface(target, this->surface);
-	}
-
+	this->zoom = z;
 	return 0;
 }

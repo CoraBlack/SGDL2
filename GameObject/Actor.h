@@ -7,11 +7,11 @@
 
 class Actor{
 public:
-	Actor(std::string& path, Uint w, Uint h);
-	Actor (Sprite s);
-	~Actor();
+	Actor(std::string& path, Uint w, Uint h); //通过载入图像资源来构造Actor
+	Actor (Sprite s);						  //通过Sprite资源构造Actor
+	~Actor() = default;
 
-private:
+protected:
 	Sprite* sprite = nullptr;
 	Vector2 position = { 0.f,0.f };
 

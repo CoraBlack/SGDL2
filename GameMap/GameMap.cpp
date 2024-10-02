@@ -30,3 +30,7 @@ void GameMap::Remove(Actor* actor) {
 void GameMap::SetBlockSize(int& size) {
 	this->blockSize = size;
 }
+
+void GameMap::Update() {
+
+}

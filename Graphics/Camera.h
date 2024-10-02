@@ -1,7 +1,16 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include "../Platform.h"
+
+#ifdef WIN32
 #include <SDL.h>
+#endif // WIN32
+
+#ifdef LINUX
+#include <SDL/SDL.h>
+#endif
+
 #include "Scene.h"
 
 class Camera{
@@ -14,13 +23,9 @@ public:
 	int OnExit();
 
 private:
-	int index = -1;
-	Uint32 flags = SDL_RENDERER_ACCELERATED;
-	SDL_Window* window = nullptr;
-	SDL_Renderer* renderer = nullptr;
 	
 public:
-	inline SDL_Renderer* GetRenderer() { return this->renderer; }
+
 };
 
 #endif

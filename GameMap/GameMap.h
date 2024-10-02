@@ -3,8 +3,9 @@
 
 #include <map>
 #include <vector>
-#include "../GameObject/Actor.h"
 #include "../Vector2.h"
+#include "../GameObject/Actor.h"
+#include "GameMode.h"
 
 class GameMap{
 public:
@@ -15,10 +16,12 @@ public:
 	void Insert(Actor* newActor);
 	void Remove(Actor* actor);
 	void SetBlockSize(int& size);
+	void Update();
 
 private:
 	int blockSize = 128;
 	std::map<Vector2, std::vector<Actor*>>blockMap;
+	GameMode gameMode;
 };
 
 

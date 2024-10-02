@@ -1,7 +1,17 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include "../Platform.h" 
+
+#ifdef WIN32
 #include <SDL.h>
+#include <SDL_image.h>
+#endif // WIN32
+
+#ifdef LINUX
+#include <SDL/SDL.h>
+#endif
+
 #include "Camera.h"
 
 class Scene{
