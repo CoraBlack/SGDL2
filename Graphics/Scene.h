@@ -9,7 +9,7 @@
 #endif // WIN32
 
 #ifdef LINUX
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #endif
 
 #include "Camera.h"
