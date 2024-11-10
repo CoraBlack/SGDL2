@@ -2,8 +2,8 @@
 #define ACTOR_H
 
 #include <string>
-#include "../Vector2.h"
-#include "../Asset/Sprite.h"
+#include "Vector2.h"
+#include "Asset/Sprite.h"
 
 class Actor{
 public:
@@ -11,8 +11,8 @@ public:
 	Actor (Sprite s);						  //通过Sprite资源构造Actor
 	~Actor() = default;
 
-protected:
-	Sprite* sprite = nullptr;
+private :
+	Sprite* sprite   =  nullptr;
 	Vector2 position = { 0.f,0.f };
 
 public:

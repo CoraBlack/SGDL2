@@ -6,8 +6,12 @@
 class Asset {
 public:
 	Asset(std::string &filePath);
-protected:
+
+private:
 	std::string path = "";
+
+public:
+
 };
 
 #endif

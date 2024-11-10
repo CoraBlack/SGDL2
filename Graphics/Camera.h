@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "../Platform.h"
+#include "Platform.h"
 
 #ifdef WIN32
 #include <SDL.h>
@@ -12,6 +12,7 @@
 #endif
 
 #include "Scene.h"
+#include "Vector2.h"
 
 class Camera{
 public:
@@ -23,8 +24,12 @@ public:
 	int OnExit();
 
 private:
-	
+	Vector2 position = { 0.f, 0.f };
+
 public:
+	inline Vector2 GetPos() const {
+		return this->GetPos();
+	}
 
 };
 

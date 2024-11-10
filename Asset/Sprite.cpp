@@ -11,40 +11,43 @@
  *  功能：读取文件且检查是否可用
  *		  解析文件类型，并初始化相应的SDL_image模块
  */
-Sprite::Sprite(std::string &path, Uint w, Uint h) : Asset(path){
+Sprite::Sprite(std::vector<ImageInfo>paths, Uint w, Uint h){
 	
 	// 检查文件是否存在
-	{
-		std::ifstream file(path);
+	for (auto i = 0; i < paths.size(); ++i) {
+		std::ifstream file(paths[i].path);
+		// 无法打开文件
 		if (!file.is_open()) {
-			std::cout << "Error: File " << path << " not found." << std::endl;
-			return;
+			std::cerr << "Error: File " << paths[i].path << " not found or falied to open." << std::endl;
+			paths.erase(paths.begin() + i);	// 移除不可用的图像信息
+			file.close();
+			continue;
 		}
+
 		file.close();
-		this->path = path; // 写入成员变量
+		this->images.push_back(paths[i]); // 写入成员变量
 	}
 
-	// 检查文件类型
-	{
-		std::string file_type = "";
+	
+	std::string file_type = "";
+	for (auto p : paths){
 
-		for (int i = path.size() - 1; i >= 0; --i) { // 从字符串的末尾开始查找
-			if (path[i] == '.') { // 若找到'.'，则从该位置开始往后截取
-				for (auto j = i + 1; j <= path.size(); ++j) {
-					file_type += path[j];
+		// 检查文件类型
+		for (int i = p.path.size() - 1; i >= 0; --i) { // 从字符串的末尾开始查找
+			if (p.path[i] == '.') {		  // 若找到'.'，则从该位置开始往后截取
+				for (auto j = i + 1; j <= p.path.size(); ++j) {
+					file_type += p.path[j];
 				}
 				break;
 			}
 		}
 		
 		// 初始化SDL2中对应的文件类型模块
-		do {
 			// Initialize PNG module
 			if (file_type == "png") {
 				if (SDL_WasInit(IMG_INIT_PNG)) {
 					IMG_Init(IMG_INIT_JPG);
 				}
-				break;
 			}
 
 			// Initialize JPG module
@@ -52,7 +55,6 @@ Sprite::Sprite(std::string &path, Uint w, Uint h) : Asset(path){
 				if (SDL_WasInit(IMG_INIT_JPG)) {
 					IMG_Init(IMG_INIT_PNG);
 				}
-				break;
 			}
 
 			// Initialize JXL module
@@ -60,7 +62,6 @@ Sprite::Sprite(std::string &path, Uint w, Uint h) : Asset(path){
 				if (SDL_WasInit(IMG_INIT_JXL)) {
 					IMG_Init(IMG_INIT_JXL);
 				}
-				break;
 			}
 
 			// Initialize AVIF module
@@ -68,11 +69,14 @@ Sprite::Sprite(std::string &path, Uint w, Uint h) : Asset(path){
 				if (SDL_WasInit(IMG_INIT_AVIF)) {
 					IMG_Init(IMG_INIT_AVIF);
 				}
-				break;
 			}
-
-		}while (0);
 	}
+
+	// 所有文件不可用
+	if (paths.empty()) {
+		std::cerr << "All of image could't load!" << std::endl;
+	}
+
 	return;
 }
 
@@ -80,7 +84,7 @@ Sprite::~Sprite() {
 	
 }
 
-std::string Sprite::GetPath() const {
+ImageInfo Sprite::GetPath() const {
 	return this->path;
 }
 
@@ -106,7 +110,7 @@ int Sprite::ChangePath(std::string &path, Uint w, Uint h) {
 		}
 	}
 
-	this->path = path;
+	this->images = path;
 	this->weight, height = w, h;
 
 	/*
@@ -128,7 +132,7 @@ int Sprite::ChangePath(std::string &path, Uint w, Uint h) {
 
 /*
  * Sprite::SetZoom
- * 参数：float z: 图像的缩放比例(必须为正浮点数)
+ * 参数：float z: 图像的缩放比例(必须为正浮点数)		
  * 返回值：int
  *		   0：成功设置新的zoom缩放比例
  *		   -1：设置的缩放比例小于等于0，失败
@@ -140,4 +144,9 @@ int Sprite::SetZoom(float z) {
 
 	this->zoom = z;
 	return 0;
+}
+
+
+void Sprite::Update(int x, int y) {
+	
 }

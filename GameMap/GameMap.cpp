@@ -32,5 +32,5 @@ void GameMap::SetBlockSize(int& size) {
 }
 
 void GameMap::Update() {
-
+	this->gameMode.GetCamera();
 }

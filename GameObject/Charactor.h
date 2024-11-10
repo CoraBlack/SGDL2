@@ -3,7 +3,7 @@
 
 #include "Actor.h"
 
-class Charactor : protected Actor{
+class Charactor : public Actor{
 public:
 	Charactor() = default;
 private:

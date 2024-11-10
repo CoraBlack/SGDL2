@@ -1,7 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "../Platform.h"
+#include "Platform.h"
 
 #ifdef WIN32
 #include <SDL.h>
@@ -16,12 +16,12 @@
 
 class Window {
 public:
-	Window(std::string title,
-			unsigned int locate_x,
-			unsigned int locate_y,
-			unsigned int size_x,
-			unsigned int size_y,
-			Uint32 flags
+	Window(std::string title,	// 窗口标题
+			int x,				// 窗口坐标x
+			int y,				// 窗口坐标y
+			unsigned int w,		// 窗口宽度
+			unsigned int h,		// 窗口宽度
+			Uint32 flags		// 窗口模式
 	);
 	~Window() = default;
 
@@ -30,4 +30,4 @@ private:
 	Scene* scene = nullptr;
 };
 
-#endif
+#endif 

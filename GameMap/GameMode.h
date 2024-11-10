@@ -10,8 +10,13 @@ public:
 
 
 private:
-	Charactor* playerClass = nullptr; //玩家类
-	Camera* camera = new Camera;	  //摄像机类
+	Charactor* playerTarget = nullptr;
+	Camera*    camera	    = nullptr;		
+
+public:
+	inline Camera* GetCamera() const {
+		return this->camera;
+	}
 };
 
 #endif

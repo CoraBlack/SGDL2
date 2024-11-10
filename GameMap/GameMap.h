@@ -3,8 +3,8 @@
 
 #include <map>
 #include <vector>
-#include "../Vector2.h"
-#include "../GameObject/Actor.h"
+#include "Vector2.h"
+#include "GameObject/Actor.h"
 #include "GameMode.h"
 
 class GameMap{
@@ -13,9 +13,9 @@ public:
 	~GameMap() = default;
 
 public:
-	void Insert(Actor* newActor);
-	void Remove(Actor* actor);
-	void SetBlockSize(int& size);
+	int  Insert(Actor* newActor);
+	int  Remove(Actor* actor);
+	int  SetBlockSize(int& size);
 	void Update();
 
 private:
