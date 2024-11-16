@@ -7,9 +7,14 @@ template<class T>
 
 class Frame{
 public:
+    Frame()  = default;
+    ~Frame() = default;
+
+    int AddKeyFunction();
 
 private:
-    
+    std::function<void()>func;
+    Sprite* farmeSprite = nullptr;
 };
 
 #endif
